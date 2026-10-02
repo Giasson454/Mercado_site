@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Relatórios e Movimentações</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js para geração dos gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <h1>Relatórios de Estoque</h1>
+        </div>
+        <div class="user-actions">
+            <a href="index.html" class="btn-nav">Voltar à Vitrine</a>
+            <span id="user-info-display"></span>
+            <button id="btn-logout" class="btn-secondary" onclick="fazerLogout()">Sair</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- KPIS / RESUMO -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Total de Movimentações</h3>
+                <p id="kpi-total-vendas">0</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Total de Produtos no Banco</h3>
+                <p id="kpi-total-produtos">0</p>
+            </div>
+        </section>
+
+        <!-- GRÁFICO -->
+        <section class="chart-section">
+            <h2>Movimentação de Produtos</h2>
+            <div class="chart-container" style="position: relative; height:300px;">
+                <canvas id="grafico-vendas"></canvas>
+            </div>
+        </section>
+
+        <!-- TABELA DE MOVIMENTAÇÕES -->
+        <section class="table-section">
+            <h2>Histórico de Movimentações (Entradas / Saídas)</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Código/ID</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-vendas-body">
+                    <!-- Preenchido via app.js -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- TABELA DE ESTOQUE -->
+        <section class="table-section">
+            <h2>Posição Atual do Estoque</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código / ID</th>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th>Quantidade Atual</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-produtos-body">
+                    <!-- Preenchido via app.js -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

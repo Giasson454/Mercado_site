@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Estoque e Vendas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9;">
+
+    <!-- Cabeçalho / Barra Superior -->
+    <header style="background-color: #1e293b; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;">
+        <h1 style="margin: 0; font-size: 1.5rem;">Sistema de Estoque</h1>
+        <div>
+            <span id="user-info-display" style="margin-right: 15px; font-weight: bold;"></span>
+            <a id="link-relatorios" href="relatorios.html" style="color: #60a5fa; margin-right: 15px; text-decoration: none; font-weight: bold;">Relatórios</a>
+            <button id="btn-logout" onclick="fazerLogout()" style="background-color: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">Sair</button>
+        </div>
+    </header>
+
+    <main style="max-width: 800px; margin: 30px auto; padding: 0 20px;">
+
+        <!-- 1. Lista de Produtos em Estoque -->
+        <section style="margin-bottom: 40px;">
+            <h2 style="text-align: center; color: #1e293b; margin-bottom: 20px;">Produtos em Estoque</h2>
+            <div id="produtos-container">
+                <!-- Os cartões de produtos aparecem aqui automaticamente via JavaScript -->
+            </div>
+        </section>
+
+        <!-- 2. Form de Realizar Pedido / Venda -->
+        <section style="background-color: white; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="margin-top: 0; color: #1e293b;">Realizar Pedido / Venda</h2>
+            <form id="form-pedido" style="margin-top: 15px;">
+                <div style="margin-bottom: 15px;">
+                    <label for="select-produto" style="display: block; font-weight: bold; margin-bottom: 5px;">Selecione o Produto:</label>
+                    <select id="select-produto" required style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 1rem;">
+                        <option value="" disabled selected>-- Selecione um produto --</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="quantidade" style="display: block; font-weight: bold; margin-bottom: 5px;">Quantidade:</label>
+                    <input type="number" id="quantidade" min="1" value="1" required style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 1rem;">
+                </div>
+
+                <button type="submit" style="background-color: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem;">
+                    Finalizar Pedido
+                </button>
+            </form>
+            <div id="mensagem-resposta" style="margin-top: 10px; font-weight: bold;"></div>
+        </section>
+
+        <!-- 3. Form de Cadastrar Novo Produto (Admin) -->
+        <section id="cadastro-produto-section" style="background-color: #f0fdf4; padding: 25px; border-radius: 8px; border: 1px solid #bbf7d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h2 style="margin-top: 0; color: #166534;">Cadastrar Novo Produto (Admin)</h2>
+            <form id="form-cadastro-produto" style="margin-top: 15px;">
+                <div style="margin-bottom: 10px;">
+                    <label for="cad-codigo" style="display: block; font-weight: bold; margin-bottom: 3px;">Código do Produto:</label>
+                    <input type="text" id="cad-codigo" required placeholder="Ex: 3" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="cad-nome" style="display: block; font-weight: bold; margin-bottom: 3px;">Nome do Produto:</label>
+                    <input type="text" id="cad-nome" required placeholder="Ex: Macarrão 500g" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="cad-preco" style="display: block; font-weight: bold; margin-bottom: 3px;">Preço (R$):</label>
+                    <input type="number" step="0.01" id="cad-preco" required placeholder="Ex: 5.50" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="cad-estoque" style="display: block; font-weight: bold; margin-bottom: 3px;">Quantidade em Estoque:</label>
+                    <input type="number" id="cad-estoque" required placeholder="Ex: 50" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="cad-imagem" style="display: block; font-weight: bold; margin-bottom: 3px;">URL da Imagem:</label>
+                    <input type="url" id="cad-imagem" placeholder="Cole aqui o link da imagem (https://...)" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="cad-descricao" style="display: block; font-weight: bold; margin-bottom: 3px;">Descrição:</label>
+                    <textarea id="cad-descricao" placeholder="Descrição opcional do produto" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; height: 60px;"></textarea>
+                </div>
+                <button type="submit" style="background-color: #16a34a; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem;">
+                    Cadastrar Produto
+                </button>
+            </form>
+            <div id="mensagem-cadastro" style="margin-top: 10px; font-weight: bold;"></div>
+        </section>
+
+    </main>
+
+    <!-- Script Principal -->
+    <script src="js/app.js"></script>
+</body>
+</html>
